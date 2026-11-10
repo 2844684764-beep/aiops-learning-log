@@ -138,15 +138,40 @@ if [ "$INSTALL_DOCKER" -eq 1 ]; then
   log "安装 Docker CE"
   dnf install -y dnf-plugins-core || warn "dnf-plugins-core 安装失败"
 
-  if [ ! -f /etc/yum.repos.d/docker-ce.repo ]; then
-    dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo \
-      || warn "Docker 源添加失败（没网？）"
-  fi
+  # download.docker.com 在国内常被 RST，默认走国内镜像（可用环境变量 DOCKER_MIRROR 覆盖）
+  local DOCKER_MIRROR="${DOCKER_MIRROR:-https://mirrors.ustc.edu.cn/docker-ce/linux/rhel}"
+  cat > /etc/yum.repos.d/docker-ce.repo <<REPO
+[docker-ce-stable]
+name=Docker CE Stable - \$basearch
+baseurl=$DOCKER_MIRROR/9/\$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=$DOCKER_MIRROR/gpg
+REPO
+  log "Docker 源: $DOCKER_MIRROR"
 
   if [ -f /etc/yum.repos.d/docker-ce.repo ]; then
     dnf install -y --allowerasing docker-ce docker-ce-cli containerd.io docker-compose-plugin \
       || die "Docker 安装失败（常见原因：没网，或 runc 与 podman 冲突没加 --allowerasing）"
     systemctl enable --now docker
+
+    # 拉镜像同样受网络影响，配国内加速器（daemon.json 已存在则不覆盖）
+    if [ ! -f /etc/docker/daemon.json ]; then
+      mkdir -p /etc/docker
+      cat > /etc/docker/daemon.json <<'JSON'
+{
+  "registry-mirrors": [
+    "https://docker.m.daocloud.io",
+    "https://docker.xuanyuan.me"
+  ],
+  "log-driver": "json-file",
+  "log-opts": { "max-size": "50m", "max-file": "3" }
+}
+JSON
+      systemctl restart docker
+      log "已配置镜像加速器"
+    fi
+
     log "Docker 已启动"
   else
     warn "跳过 Docker：没有可用源。可改用 podman，或先解决网络。"
