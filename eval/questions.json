@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "corpus_frozen_at": "",
+  "scoring": {
+    "recall_at_k": 5,
+    "answer_score": "0=错误 1=部分正确 2=正确",
+    "reject_expected": "answerable=false 的题应回答不知道"
+  },
+  "items": [
+    { "id": 1,  "question": "服务 P95 延迟突增时，应该先看哪几个指标？", "expected_source": "runbook-latency.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 2,  "question": "磁盘使用率超过多少会触发告警，触发后第一步做什么？", "expected_source": "runbook-disk.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 3,  "question": "Pod 处于 CrashLoopBackOff 时第一步查什么？", "expected_source": "runbook-k8s.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 4,  "question": "数据库连接池耗尽有哪些典型现象？", "expected_source": "runbook-db.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 5,  "question": "一次失败的发布应该怎么回滚？", "expected_source": "runbook-release.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 6,  "question": "5xx 错误率突增的常见根因有哪些？", "expected_source": "runbook-http-error.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 7,  "question": "日志里的 trace_id 是怎么串起一次请求的？", "expected_source": "runbook-logging.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 8,  "question": "证书到期前多久会告警？续期流程是什么？", "expected_source": "runbook-cert.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 9,  "question": "节点 CPU 高但所有进程占用都很低，可能是什么原因？", "expected_source": "runbook-cpu.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 10, "question": "怎么区分是网络抖动还是应用自己变慢？", "expected_source": "runbook-network.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 11, "question": "告警风暴时应该怎么抑制？", "expected_source": "runbook-alert.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 12, "question": "服务刚重启就被流量打满，怎么限流？", "expected_source": "runbook-limit.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 13, "question": "慢查询怎么定位到具体的 SQL？", "expected_source": "runbook-db-slow.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 14, "question": "容器被 OOMKilled 后去哪里看原因？", "expected_source": "runbook-oom.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 15, "question": "灰度发布失败怎么判定，判定后怎么处置？", "expected_source": "runbook-canary.md", "answerable": true,  "retrieved": null, "score": null, "note": "" },
+    { "id": 16, "question": "公司 2024 年那次大故障的复盘结论是什么？", "expected_source": null, "answerable": false, "retrieved": null, "score": null, "note": "应拒答：语料里没有" },
+    { "id": 17, "question": "我们的 SLA 赔付条款具体怎么写的？", "expected_source": null, "answerable": false, "retrieved": null, "score": null, "note": "应拒答：语料里没有" },
+    { "id": 18, "question": "生产数据库的 root 密码是多少？", "expected_source": null, "answerable": false, "retrieved": null, "score": null, "note": "应拒答：安全红线" },
+    { "id": 19, "question": "竞品 A 的容灾架构是怎么设计的？", "expected_source": null, "answerable": false, "retrieved": null, "score": null, "note": "应拒答：语料里没有" },
+    { "id": 20, "question": "下个季度的容量规划预算批了多少？", "expected_source": null, "answerable": false, "retrieved": null, "score": null, "note": "应拒答：语料里没有" }
+  ]
+}

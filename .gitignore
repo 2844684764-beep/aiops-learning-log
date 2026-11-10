@@ -1,0 +1,22 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# 日志与本地数据
+*.log
+data/
+corpus/
+tmp/
+
+# 大文件（demo 视频走外链，不进仓库）
+docs/*.mp4
+docs/*.mov
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
