@@ -38,7 +38,8 @@
 ## 进度
 
 - [x] 环境搭建（Docker 29.9.3 / Compose v5.7.0 / EPEL / 镜像加速器）
-- [ ] 第 1 周
+- [x] D1 服务 + `/metrics`（[src/app.py](src/app.py) · [notes/D01.md](notes/D01.md)）
+- [ ] D2–D7 第 1 周
 - [ ] 第 2 周
 - [ ] 第 3 周
 
