@@ -71,6 +71,8 @@ setup_dvd_repo() {
   if [ -f "$GPG_KEY" ]; then
     rpm --import "$GPG_KEY" 2>/dev/null || true
     gpg=1
+  else
+    warn "未找到 Red Hat GPG 公钥，本次 gpgcheck=0"
   fi
 
   cat > /etc/yum.repos.d/local-dvd.repo <<EOF
@@ -100,8 +102,9 @@ EOF
 if command -v subscription-manager >/dev/null 2>&1; then
   subscription-manager config --rhsm.manage_repos=0 >/dev/null 2>&1 || true
 fi
-[ -f /etc/yum.repos.d/redhat.repo ] && \
+if [ -f /etc/yum.repos.d/redhat.repo ]; then
   mv /etc/yum.repos.d/redhat.repo /etc/yum.repos.d/redhat.repo.disabled
+fi
 
 HAVE_DVD=0
 if setup_dvd_repo; then HAVE_DVD=1; fi
