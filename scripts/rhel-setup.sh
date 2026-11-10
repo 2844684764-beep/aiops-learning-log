@@ -139,7 +139,7 @@ if [ "$INSTALL_DOCKER" -eq 1 ]; then
   dnf install -y dnf-plugins-core || warn "dnf-plugins-core 安装失败"
 
   # download.docker.com 在国内常被 RST，默认走国内镜像（可用环境变量 DOCKER_MIRROR 覆盖）
-  local DOCKER_MIRROR="${DOCKER_MIRROR:-https://mirrors.ustc.edu.cn/docker-ce/linux/rhel}"
+  DOCKER_MIRROR="${DOCKER_MIRROR:-https://mirrors.ustc.edu.cn/docker-ce/linux/rhel}"
   cat > /etc/yum.repos.d/docker-ce.repo <<REPO
 [docker-ce-stable]
 name=Docker CE Stable - \$basearch
