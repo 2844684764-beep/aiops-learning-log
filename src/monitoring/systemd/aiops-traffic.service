@@ -1,0 +1,23 @@
+[Unit]
+Description=AIOps demo traffic generator (keeps metrics non-empty)
+Documentation=file:///home/shawny/aiops/README.md
+After=aiops-app.service
+Wants=aiops-app.service
+
+[Service]
+Type=simple
+User=shawny
+Group=shawny
+WorkingDirectory=/home/shawny/aiops
+
+# 参数：目标地址 间隔秒数
+ExecStart=/bin/bash /home/shawny/aiops/traffic.sh localhost:8000 2
+
+Restart=always
+RestartSec=5
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

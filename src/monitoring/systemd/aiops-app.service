@@ -1,0 +1,26 @@
+[Unit]
+Description=AIOps demo app (FastAPI + Prometheus metrics)
+Documentation=file:///home/shawny/aiops/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=shawny
+Group=shawny
+WorkingDirectory=/home/shawny/aiops
+Environment=PYTHONUNBUFFERED=1
+
+# 用 venv 里的 uvicorn，不要用系统 python
+ExecStart=/home/shawny/aiops/.venv/bin/uvicorn app:app --host 0.0.0.0 --port 8000
+
+# 挂了自动重启
+Restart=always
+RestartSec=3
+
+# 日志走 journald：journalctl -u aiops-app
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
