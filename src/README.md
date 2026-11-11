@@ -1,16 +1,32 @@
-﻿# 鏈嶅姟浠ｇ爜锛圖1 璧凤級
+# 服务代码（D1 起）
 
-瀵瑰簲鎵嬪唽锛歔W1-绗?鍛?md](../handbook/W1-绗?鍛?md)
+对应手册：[W1-第1周.md](../handbook/W1-第1周.md)
 
-## 褰撳墠杩涘害
+## 当前进度
 
-| 澶?| 鍐呭 | 鐘舵€?|
+| 天 | 内容 | 状态 |
 |---|---|---|
-| D1 | FastAPI 鏈嶅姟 + `/metrics` 鎸囨爣 | 鉁?|
-| D2 | Prometheus + Grafana | 猬?|
-| D3 | 缁撴瀯鍖栨棩蹇?| 猬?|
+| D1 | FastAPI 服务 + `/metrics` 指标 | ✅ |
+| D2 | Prometheus + Grafana + 仪表盘 | ✅ |
+| D3 | 结构化日志 | ⬜ |
+| D4 | 告警 | ⬜ |
 
-## 鎬庝箞璺?
+## 目录
+
+```
+src/
+├── app.py                  # D1：业务服务，暴露 /metrics
+├── requirements.txt
+├── README.md
+└── monitoring/             # D2：Prometheus + Grafana
+    ├── docker-compose.yml
+    ├── prometheus.yml
+    ├── provisioning/
+    └── dashboards/
+```
+
+## 怎么跑
+
 ```bash
 cd ~/aiops
 python3 -m venv .venv
@@ -21,17 +37,33 @@ pip install -r requirements.txt
 uvicorn app:app --host 0.0.0.0 --port 8000
 ```
 
-## 鎺ュ彛
+监控栈另一个终端：
 
-| 璺緞 | 浣滅敤 | 杩斿洖 |
-|---|---|---|
-| `/` | 姝ｅ父鎺ュ彛 | `{"msg":"ok"}` |
-| `/slow` | 鏁呮剰鎱?0.1鈥? 绉掞紝鍒堕€犲欢杩?| `{"msg":"slow"}` |
-| `/error` | 鏁呮剰杩斿洖 500锛屽埗閫犻敊璇巼 | `{"msg":"boom"}` + 500 |
-| `/metrics` | Prometheus 鎶撳彇鍏ュ彛 | 绾枃鏈寚鏍?|
+```bash
+cd ~/aiops
+docker compose up -d
+```
 
-## 鏆撮湶鐨勬寚鏍?
-| 鎸囨爣 | 绫诲瀷 | 鍚箟 |
+## 接口
+
+| 路径 | 作用 | 返回 |
 |---|---|---|
-| `app_requests_total{path,status}` | Counter | 璇锋眰鎬绘暟锛屾寜璺緞鍜岀姸鎬佺爜鍒嗙粍 |
-| `app_latency_seconds{path}` | Histogram | 璇锋眰鑰楁椂鍒嗗竷锛岀敤鏉ョ畻 P95 |
+| `/` | 正常接口 | `{"msg":"ok"}` |
+| `/slow` | 故意慢 0.1–1 秒，制造延迟 | `{"msg":"slow"}` |
+| `/error` | 故意返回 500，制造错误率 | `{"msg":"boom"}` + 500 |
+| `/metrics` | Prometheus 抓取入口 | 纯文本指标 |
+
+## 暴露的指标
+
+| 指标 | 类型 | 含义 |
+|---|---|---|
+| `app_requests_total{path,status}` | Counter | 请求总数，按路径和状态码分组 |
+| `app_latency_seconds{path}` | Histogram | 请求耗时分布，用来算 P95 |
+
+## 访问地址
+
+| 服务 | 地址 |
+|---|---|
+| 业务服务 | http://192.168.223.129:8000 |
+| Prometheus | http://192.168.223.129:9090 |
+| Grafana | http://192.168.223.129:3000 |
