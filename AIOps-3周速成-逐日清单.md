@@ -10,7 +10,7 @@
 
 ## 第 0 天 · 准备（2h）
 
-- [ ] 一台 2C4G 机器（云主机或本地 WSL2），装好 Docker + docker compose
+- [x] 一台 2C4G 机器（云主机或本地 WSL2），装好 Docker + docker compose
 - [ ] 装 VS Code + Remote-SSH（连云主机）或 Dev Containers
 - [ ] 申请 LLM API key，跑通一次 hello world（能打印回复即可）
 - [ ] 收集 15–20 篇语料：runbook、故障复盘、官方文档摘要（脱敏后使用）

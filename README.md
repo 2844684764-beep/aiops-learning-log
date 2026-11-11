@@ -59,7 +59,7 @@
 
 ## 常用命令
 
-```bash
+``` bash
 # 虚拟机里
 cd ~/aiops
 source .venv/bin/activate

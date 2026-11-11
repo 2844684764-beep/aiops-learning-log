@@ -1,0 +1,33 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prom-data:/prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      # 关闭匿名访问，但允许嵌入
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      # 仪表盘 JSON：只读挂载，Grafana 启动时自动加载
+      - ./dashboards:/var/lib/grafana/dashboards:ro
+      # 告诉 Grafana 去哪读这些 JSON
+      - ./provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/aiops.yml:ro
+    restart: unless-stopped
+
+volumes:
+  prom-data:
+  grafana-data:
