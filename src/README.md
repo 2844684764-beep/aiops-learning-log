@@ -8,7 +8,7 @@
 |---|---|---|
 | D1 | FastAPI 服务 + `/metrics` 指标 | ✅ |
 | D2 | Prometheus + Grafana + 仪表盘 | ✅ |
-| D3 | 结构化日志 | ⬜ |
+| D3 | 结构化日志 + trace_id | ✅ |
 | D4 | 告警 | ⬜ |
 
 ## 目录

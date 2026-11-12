@@ -1,13 +1,64 @@
 # app.py —— 一个会暴露指标的小服务
 import time
 import random
+import logging
+import json
+import uuid
+from starlette.middleware.base import BaseHTTPMiddleware
+
+# ── 日志配置 ────────────────────────────────────────────
+class JsonFormatter(logging.Formatter):
+    """把日志格式化成一行 JSON"""
+    def format(self, record):
+        base = {
+            "ts": self.formatTime(record, "%Y-%m-%dT%H:%M:%S"),
+            "level": record.levelname,
+            "msg": record.getMessage(),
+        }
+        # 把 extra 里传的自定义字段也带上
+        for k in ("trace_id", "path", "status", "latency_ms", "client"):
+            v = getattr(record, k, None)
+            if v is not None:
+                base[k] = v
+        return json.dumps(base, ensure_ascii=False)
+
+handler = logging.FileHandler("/home/shawny/aiops/app.log", encoding="utf-8")
+handler.setFormatter(JsonFormatter())
+
+log = logging.getLogger("app")
+log.setLevel(logging.INFO)
+log.addHandler(handler)
+log.propagate = False      # 不要同时输出到屏幕，避免重复
+
+
+# ── 访问日志中间件 ──────────────────────────────────────
+class AccessLog(BaseHTTPMiddleware):
+    """每个请求进出都记一条，自动带 trace_id 和耗时"""
+    async def dispatch(self, request, call_next):
+        if request.url.path == "/metrics":     # 抓指标太频繁，不记
+            return await call_next(request)
+
+        start = time.time()
+        trace_id = request.headers.get("x-trace-id") or uuid.uuid4().hex[:8]
+        response = await call_next(request)
+        cost_ms = (time.time() - start) * 1000
+
+        log.info("request", extra={
+            "trace_id": trace_id,
+            "path": request.url.path,
+            "status": response.status_code,
+            "latency_ms": round(cost_ms, 1),
+            "client": request.client.host if request.client else "-",
+        })
+        response.headers["x-trace-id"] = trace_id   # 回传给调用方，方便串联
+        return response
 
 from fastapi import FastAPI
 from fastapi.responses import Response, JSONResponse
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 app = FastAPI(title="aiops-demo")
-
+app.add_middleware(AccessLog)
 # ── 两个指标 ────────────────────────────────────────────
 # Counter：只增不减的计数器。这里按「路径」和「状态码」分组统计请求数
 REQUESTS = Counter("app_requests_total", "请求总数", ["path", "status"])
