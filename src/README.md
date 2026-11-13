@@ -10,7 +10,7 @@
 | D2 | Prometheus + Grafana + 仪表盘 | ✅ |
 | D3 | 结构化日志 + trace_id | ✅ |
 | D4 | 告警（规则 + Alertmanager + 接收器） | ✅ |
-| D5 | 故障注入 | ⬜ |
+| D5 | 故障注入 | ✅ |
 
 ## 目录
 
