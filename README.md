@@ -43,7 +43,8 @@
 - [x] D3 结构化日志（[notes/D03.md](notes/D03.md)）
 - [x] D4 告警链路（[notes/D04.md](notes/D04.md)）
 - [x] D5 故障注入（[notes/D05.md](notes/D05.md)）
-- [ ] D6–D7 第 1 周
+- [x] D6 Linux 排查四件套（[notes/D06-cheatsheet.md](notes/D06-cheatsheet.md)）
+- [x] D7 第 1 周复盘（[notes/D07.md](notes/D07.md)）
 - [ ] 第 2 周
 - [ ] 第 3 周
 
