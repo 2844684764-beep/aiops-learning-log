@@ -9,18 +9,22 @@
 | D1 | FastAPI 服务 + `/metrics` 指标 | ✅ |
 | D2 | Prometheus + Grafana + 仪表盘 | ✅ |
 | D3 | 结构化日志 + trace_id | ✅ |
-| D4 | 告警 | ⬜ |
+| D4 | 告警（规则 + Alertmanager + 接收器） | ✅ |
+| D5 | 故障注入 | ⬜ |
 
 ## 目录
 
 ```
 src/
 ├── app.py                  # D1：业务服务，暴露 /metrics
+├── receiver.py             # D4：接收 Alertmanager 的告警
 ├── requirements.txt
 ├── README.md
-└── monitoring/             # D2：Prometheus + Grafana
+└── monitoring/             # D2 起：Prometheus + Grafana + Alertmanager
     ├── docker-compose.yml
     ├── prometheus.yml
+    ├── rules.yml           # D4：3 条告警规则
+    ├── alertmanager.yml    # D4：告警路由
     ├── provisioning/
     └── dashboards/
 ```

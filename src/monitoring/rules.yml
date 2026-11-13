@@ -1,0 +1,33 @@
+groups:
+  - name: app-rules
+    rules:
+      # 规则 1：P95 延迟过高
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, sum(rate(app_latency_seconds_bucket[1m])) by (le)) > 0.5
+        for: 1m                    # 持续 1 分钟才报，避免抖动误报
+        labels:
+          severity: warning
+        annotations:
+          summary: "P95 延迟超过 500ms"
+          description: "当前 P95 = {{ $value | printf \"%.3f\" }}s"
+
+      # 规则 2：错误率过高
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(app_requests_total{status=~"5.."}[1m]))
+          /
+          sum(rate(app_requests_total[1m])) > 0.05
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "5xx 错误率超过 5%"
+
+      # 规则 3：服务挂了（抓不到指标）
+      - alert: AppDown
+        expr: up{job="aiops-app"} == 0
+        for: 15s
+        labels:
+          severity: critical
+        annotations:
+          summary: "应用无法抓取，可能已停止"

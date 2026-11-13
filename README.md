@@ -41,7 +41,8 @@
 - [x] D1 服务 + `/metrics`（[src/app.py](src/app.py) · [notes/D01.md](notes/D01.md)）
 - [x] D2 Prometheus + Grafana + 仪表盘（[src/monitoring/](src/monitoring) · [notes/D02.md](notes/D02.md)）
 - [x] D3 结构化日志（[notes/D03.md](notes/D03.md)）
-- [ ] D4–D7 第 1 周
+- [x] D4 告警链路（[notes/D04.md](notes/D04.md)）
+- [ ] D5–D7 第 1 周
 - [ ] 第 2 周
 - [ ] 第 3 周
 
