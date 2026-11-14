@@ -1,3 +1,10 @@
 fastapi==0.128.8
 uvicorn==0.39.0
 prometheus-client==0.26.0
+
+# D8 起：RAG 用的依赖（第 2 周）
+openai==2.48.0
+chromadb==1.5.9
+python-dotenv==1.2.1
+# RHEL 9 自带 sqlite 3.34.1 < chromadb 要求的 3.35.0，用这个包顶上
+pysqlite3-binary==0.5.4.post2

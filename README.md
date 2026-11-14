@@ -45,6 +45,7 @@
 - [x] D5 故障注入（[notes/D05.md](notes/D05.md)）
 - [x] D6 Linux 排查四件套（[notes/D06-cheatsheet.md](notes/D06-cheatsheet.md)）
 - [x] D7 第 1 周复盘（[notes/D07.md](notes/D07.md)）
+- [x] D8 语料切分 + bge-m3 向量入库 + 检索验证（[src/build_index.py](src/build_index.py) · [notes/D08.md](notes/D08.md)）
 - [ ] 第 2 周
 - [ ] 第 3 周
 

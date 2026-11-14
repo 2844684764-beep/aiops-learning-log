@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 __pycache__/
 *.py[cod]
 .venv/
@@ -30,3 +30,10 @@ desktop.ini
 *.pem
 *.p12
 id_rsa*
+
+# 向量库与生成物（D8 起）
+chroma/
+corpus_stats.json
+*.swp
+*.swo
+google-sre-book/
